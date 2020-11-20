@@ -4,7 +4,7 @@
              x:Class="CodeScaner.SettingsPage">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="field">
+            <Style x:Key="field" TargetType="Grid">
                 <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
             </Style>
         </ResourceDictionary>
@@ -15,24 +15,24 @@
             <Grid Style="{StaticResource field}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="4"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="4"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="4"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="4"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Entry x:Name="firstByte" Grid.Column="1" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
-                <Entry Grid.Column="2" Text="." IsReadOnly="True" Style="{StaticResource field}"></Entry>
-                <Entry x:Name="secondByte" Grid.Column="3" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
-                <Entry Grid.Column="4" Text="." IsReadOnly="True" Style="{StaticResource field}"></Entry>
-                <Entry x:Name="thirdByte" Grid.Column="5" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
-                <Entry Grid.Column="6" Text="." IsReadOnly="True" Style="{StaticResource field}"></Entry>
-                <Entry x:Name="fourthByte" Grid.Column="7" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
-                <Entry Grid.Column="8" Text=":" IsReadOnly="True" Style="{StaticResource field}"></Entry>
-                <Entry x:Name="port" Grid.Column="9" Keyboard="Numeric" TextChanged="PortChanged" Style="{StaticResource field}"></Entry>
+                <Entry x:Name="firstByte" Grid.Column="0" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
+                <Entry Grid.Column="1" Text="." IsReadOnly="True" Style="{StaticResource field}"></Entry>
+                <Entry x:Name="secondByte" Grid.Column="2" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
+                <Entry Grid.Column="3" Text="." IsReadOnly="True" Style="{StaticResource field}"></Entry>
+                <Entry x:Name="thirdByte" Grid.Column="4" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
+                <Entry Grid.Column="5" Text="." IsReadOnly="True" Style="{StaticResource field}"></Entry>
+                <Entry x:Name="fourthByte" Grid.Column="6" Keyboard="Numeric" TextChanged="SomeByteChanged" Style="{StaticResource field}"></Entry>
+                <Entry Grid.Column="7" Text=":" IsReadOnly="True" Style="{StaticResource field}"></Entry>
+                <Entry x:Name="port" Grid.Column="8" Keyboard="Numeric" TextChanged="PortChanged" Style="{StaticResource field}"></Entry>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

@@ -22,16 +22,16 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="camera" Grid.Column="1" Text="&#128247;" Clicked="OpenScanner" Style="{StaticResource btn}"></Button>
-            <Button x:Name="input" Grid.Column="2" Text="&#128221;" Clicked="InputCode" Style="{StaticResource btn}"></Button>
+            <Button x:Name="camera" Grid.Column="0" Text="&#128247;" Clicked="OpenScanner" Style="{StaticResource btn}"></Button>
+            <Button x:Name="input" Grid.Column="1" Text="&#128221;" Clicked="InputCode" Style="{StaticResource btn}"></Button>
         </Grid>
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button x:Name="serverChat" Grid.Column="1" Text="Пообщаться с сервером" Clicked="OpenServerChat"  Style="{StaticResource btn}"></Button>
-            <Button x:Name="settings" Grid.Column="2" Text="&#9881;" Clicked="OpenSettings" Style="{StaticResource btn}"></Button>
+            <Button x:Name="serverChat" Grid.Column="0" Text="Пообщаться с сервером" Clicked="OpenServerChat"  Style="{StaticResource btn}"></Button>
+            <Button x:Name="settings" Grid.Column="1" Text="&#9881;" Clicked="OpenSettings" Style="{StaticResource btn}"></Button>
         </Grid>
     </StackLayout>
 
