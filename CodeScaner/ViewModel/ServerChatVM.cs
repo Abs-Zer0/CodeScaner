@@ -46,13 +46,13 @@ namespace CodeScaner.ViewModel
             }
         }
 
-        public ICommand Send { get; set; }
+        public ICommand Send { get; }
 
         public TcpClient Client { get; private set; } = new TcpClient();
 
         public ServerChatVM()
         {
-            Send = new Command(() => SendCommand());
+            Send = new Command(SendCommand);
             Connect();
         }
 

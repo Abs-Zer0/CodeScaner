@@ -36,7 +36,7 @@
                 </Grid.ColumnDefinitions>
                 <Editor Text="{Binding MessageToSend}" Margin="1"
                        TextColor="Black" Keyboard="Chat" HorizontalOptions="FillAndExpand" PlaceholderColor="LightGray"
-                       Placeholder="Type your message here" Grid.Row="0" Grid.Column="0" Completed="Send">
+                       Placeholder="Type your message here" Grid.Row="0" Grid.Column="0">
                 </Editor>
                 <Button Text="&#10148;" Command="{Binding Send}" Grid.Row="0" Grid.Column="1"></Button>
             </Grid>
