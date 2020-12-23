@@ -25,7 +25,7 @@ namespace CodeScaner.ViewModel
             get => msg;
             set
             {
-                if (msg != value)
+                if (!msg.Equals(value))
                 {
                     msg = value;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(MessageToSend)));
@@ -38,7 +38,7 @@ namespace CodeScaner.ViewModel
             get => status;
             set
             {
-                if (status != value)
+                if (!status.Equals(value))
                 {
                     status = value;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(ConnectionStatus)));
@@ -52,81 +52,72 @@ namespace CodeScaner.ViewModel
 
         public ServerChatVM()
         {
-            Send = new Command(SendCommand);
+            status = "Подключение";
+            Client.SendTimeout = 2000;
+            Send = new Command(() => new Thread(StartSend).Start());
             Connect();
         }
 
         private void Connect()
         {
-            string[] ipPort = CrossSettings.Current.GetValueOrDefault("ip:port", "0.0.0.0:0").Split(':');
-            ConnectionStatus = "Подключение к " + ipPort[0] + ":" + ipPort[1];
-            Thread thr = new Thread(() =>
-            {
-                try
-                {
-                    IAsyncResult res = Client.BeginConnect(IPAddress.Parse(ipPort[0]),
-                        int.Parse(ipPort[1]),
-                        new AsyncCallback(ConnectionComplete),
-                        ipPort);
-                    Timer timer = new Timer(new TimerCallback(ConnectionCancel), res, 5000, Timeout.Infinite);
-                }
-                catch (Exception) { }
-            });
-        }
-
-        private void ConnectionComplete(object obj)
-        {
-            string[] ipPort = (string[])obj;
-            ConnectionStatus = "Подключено к " + ipPort[0] + ":" + ipPort[1];
             Thread thr = new Thread(() =>
               {
-                  while (Client.Connected)
+                  string[] ipPort = CrossSettings.Current.GetValueOrDefault("ip:port", "0.0.0.0:0").Split(':');
+                  status = "Подключение к " + ipPort[0] + ":" + ipPort[1];
+                  try
                   {
-                      if (Client.Available > 0)
-                      {
-                          byte[] buf = new byte[Client.Available];
-                          Client.GetStream().Read(buf, 0, buf.Length);
-                          Messages.Add(new TestMessage(System.Text.Encoding.Unicode.GetString(buf), false));
-                      }
+                      Timer timer = new Timer(new TimerCallback(ConnectionCancel), null, 5000, Timeout.Infinite);
+                      Client.Connect(IPAddress.Parse(ipPort[0]), int.Parse(ipPort[1]));
+                      ConnectionStatus = "Поключено к " + ipPort[0] + ":" + ipPort[1];
+                      StartRead();
+                  }
+                  catch (SocketException ex)
+                  {
+                      ConnectionStatus = ex.Message;
                   }
               });
+            if (thr.ThreadState == ThreadState.Unstarted)
+                thr.Start();
         }
 
         private void ConnectionCancel(object obj)
         {
-            try
-            {
-                IAsyncResult res = (IAsyncResult)obj;
-                Client.EndConnect(res);
-            }
-            catch (Exception) { }
+            if (!Client.Connected)
+                Client.Close();
         }
 
-        private void SendCommand()
+        private void StartRead()
+        {
+            while (Client.Connected)
+            {
+                if (Client.Available > 0)
+                {
+                    byte[] buf = new byte[Client.Available];
+                    Client.GetStream().Read(buf, 0, buf.Length);
+                    string message = System.Text.Encoding.Unicode.GetString(buf);
+
+                    Messages.Add(new TestMessage(message, false));
+                }
+            }
+        }
+
+        private void StartSend()
         {
             if (Client.Connected)
             {
-                byte[] arr = System.Text.Encoding.Unicode.GetBytes(MessageToSend);
+                byte[] buf = System.Text.Encoding.Unicode.GetBytes(MessageToSend);
                 Messages.Add(new TestMessage(MessageToSend));
                 MessageToSend = string.Empty;
 
                 try
                 {
-                    IAsyncResult res = Client.GetStream().BeginWrite(arr, 0, arr.Length, null, null);
-                    Timer timer = new Timer(new TimerCallback(WriteCancel), res, 2000, Timeout.Infinite);
+                    Client.GetStream().Write(buf, 0, buf.Length);
                 }
-                catch (Exception) { }
+                catch (Exception ex)
+                {
+                    ConnectionStatus = ex.Message;
+                }
             }
-        }
-
-        private void WriteCancel(object obj)
-        {
-            try
-            {
-                IAsyncResult res = (IAsyncResult)obj;
-                Client.GetStream().EndWrite(res);
-            }
-            catch (Exception) { }
         }
     }
 }

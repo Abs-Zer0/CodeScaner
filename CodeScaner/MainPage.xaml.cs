@@ -1,4 +1,5 @@
 ﻿using CodeScaner.Model;
+using CodeScaner.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,7 +58,7 @@ namespace CodeScaner
 
         private void InputCode(object sender, EventArgs e)
         {
-
+            Navigation.PushAsync(new AuthorizationPage());
         }
 
         private void OpenServerChat(object sender, EventArgs e)
