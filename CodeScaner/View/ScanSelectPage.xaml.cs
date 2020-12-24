@@ -5,13 +5,13 @@ using Xamarin.Forms.Xaml;
 namespace CodeScaner.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AuthorizationPage : ContentPage
+    public partial class ScanSelectPage : ContentPage
     {
-        public AuthorizationPage()
+        public ScanSelectPage()
         {
-            this.Title = "Авторизация";
+            this.Title = "Метод введения данных";
             InitializeComponent();
-            this.BindingContext = new AuthorizationVM(this.Navigation);
+            this.BindingContext = new ScanSelectVM(this.Navigation);
         }
     }
 }

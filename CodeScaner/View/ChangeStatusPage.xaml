@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeScaner.View.ChangeStatusPage">
+    <ContentPage.Resources>
+        <Style x:Key="btn-primary" TargetType="Button">
+            <Setter Property="TextColor" Value="#fff"></Setter>
+            <Setter Property="BackgroundColor" Value="#007bff"></Setter>
+            <Setter Property="BorderColor" Value="#007bff"></Setter>
+            <Setter Property="BorderWidth" Value="2"></Setter>
+            <Setter Property="Padding" Value="10, 5"></Setter>
+        </Style>
+        <Style x:Key="form-label" TargetType="Label">
+            <Setter Property="HorizontalTextAlignment" Value="Start"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="FontAttributes" Value="Bold"></Setter>
+        </Style>
+        <Style x:Key="form-control" TargetType="Entry">
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="TextColor" Value="#495057"></Setter>
+            <Setter Property="BackgroundColor" Value="#fff"></Setter>
+        </Style>
+        <Style x:Key="alert-danger" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#f8d7da"></Setter>
+            <Setter Property="BorderColor" Value="#f5c6cb"></Setter>
+            <Setter Property="Padding" Value="12, 7"></Setter>
+            <Setter Property="Margin" Value="0, 0, 0, 10"></Setter>
+        </Style>
+        <Style x:Key="alert-success" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#d4edda"></Setter>
+            <Setter Property="BorderColor" Value="#c3e6cb"></Setter>
+            <Setter Property="Padding" Value="12, 7"></Setter>
+            <Setter Property="Margin" Value="0, 0, 0, 10"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="10, 5">
+            <Frame Style="{StaticResource alert-danger}" IsVisible="{Binding IsError}">
+                <Label TextColor="#721c24" Text="{Binding ErrorMsg}"></Label>
+            </Frame>
+            <Frame Style="{StaticResource alert-success}" IsVisible="{Binding IsSuccess}">
+                <Label TextColor="#155724" Text="{Binding SuccessMsg}"></Label>
+            </Frame>
+            <StackLayout Margin="0, 0, 0, 20">
+                <Label Style="{StaticResource form-label}" Text="Значение кода"></Label>
+                <Entry Style="{StaticResource form-control}" Text="{Binding Barcode}"></Entry>
+            </StackLayout>
+            <StackLayout Margin="0, 0, 0, 20">
+                <Label Style="{StaticResource form-label}" Text="Статус"></Label>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Grid.Row="0" Grid.Column="0" GroupName="status" Value="processing" IsChecked="True" CheckedChanged="StatusChanged"></RadioButton>
+                    <RadioButton Grid.Row="1" Grid.Column="0" GroupName="status" Value="send" CheckedChanged="StatusChanged"></RadioButton>
+                    <RadioButton Grid.Row="2" Grid.Column="0" GroupName="status" Value="go" CheckedChanged="StatusChanged"></RadioButton>
+                    <RadioButton Grid.Row="3" Grid.Column="0" GroupName="status" Value="receive" CheckedChanged="StatusChanged"></RadioButton>
+                    <RadioButton Grid.Row="4" Grid.Column="0" GroupName="status" Value="lost" CheckedChanged="StatusChanged"></RadioButton>
+                    <RadioButton Grid.Row="5" Grid.Column="0" GroupName="status" Value="other" CheckedChanged="StatusChanged"></RadioButton>
+                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource form-label}" Text="В обработке"></Label>
+                    <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource form-label}" Text="Отправлено"></Label>
+                    <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource form-label}" Text="В пути"></Label>
+                    <Label Grid.Row="3" Grid.Column="1" Style="{StaticResource form-label}" Text="Получено"></Label>
+                    <Label Grid.Row="4" Grid.Column="1" Style="{StaticResource form-label}" Text="Потеряно"></Label>
+                    <Label Grid.Row="5" Grid.Column="1" Style="{StaticResource form-label}" Text="Другое:"></Label>
+                </Grid>
+                <Entry x:Name="otherTxt" Style="{StaticResource form-control}" Text="{Binding OtherText}" IsVisible="False"></Entry>
+            </StackLayout>
+            <StackLayout Margin="0, 0, 0, 20">
+                <Button Style="{StaticResource btn-primary}" Command="{Binding Send}" Text="Сохранить изменения"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Command="{Binding OpenSettings}" Text="&#9881;"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+</ContentPage>

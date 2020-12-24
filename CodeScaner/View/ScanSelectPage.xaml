@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeScaner.View.ScanSelectPage">
+    <ContentPage.Resources>
+        <Style x:Key="btn-primary" TargetType="Button">
+            <Setter Property="TextColor" Value="#fff"></Setter>
+            <Setter Property="BackgroundColor" Value="#007bff"></Setter>
+            <Setter Property="BorderColor" Value="#007bff"></Setter>
+            <Setter Property="BorderWidth" Value="2"></Setter>
+            <Setter Property="Margin" Value="0, 30"></Setter>
+            <Setter Property="Padding" Value="10, 5"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="10, 5">
+            <Button Style="{StaticResource btn-primary}" Command="{Binding OpenScaner}" Text="Сканировать код"></Button>
+            <Button Style="{StaticResource btn-primary}" Command="{Binding EnterCode}" Text="Ввести код вручную"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

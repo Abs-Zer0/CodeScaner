@@ -1,9 +1,8 @@
-﻿using Microsoft.AppCenter;
+﻿using CodeScaner.View;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace CodeScaner
 {
@@ -13,7 +12,7 @@ namespace CodeScaner
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new AuthorizationPage());
         }
 
         protected override void OnStart()

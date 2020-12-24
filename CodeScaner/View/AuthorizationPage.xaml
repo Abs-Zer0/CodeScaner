@@ -2,24 +2,52 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CodeScaner.View.AuthorizationPage">
+    <ContentPage.Resources>
+        <Style x:Key="btn-primary" TargetType="Button">
+            <Setter Property="TextColor" Value="#fff"></Setter>
+            <Setter Property="BackgroundColor" Value="#007bff"></Setter>
+            <Setter Property="BorderColor" Value="#007bff"></Setter>
+            <Setter Property="BorderWidth" Value="2"></Setter>
+            <Setter Property="Padding" Value="10, 5"></Setter>
+        </Style>
+        <Style x:Key="form-label" TargetType="Label">
+            <Setter Property="HorizontalTextAlignment" Value="Start"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="FontAttributes" Value="Bold"></Setter>
+        </Style>
+        <Style x:Key="form-control" TargetType="Entry">
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="TextColor" Value="#495057"></Setter>
+            <Setter Property="BackgroundColor" Value="#fff"></Setter>
+        </Style>
+        <Style x:Key="alert-danger" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#f8d7da"></Setter>
+            <Setter Property="BorderColor" Value="#f5c6cb"></Setter>
+            <Setter Property="Padding" Value="12, 7"></Setter>
+            <Setter Property="Margin" Value="0, 0, 0, 10"></Setter>
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label Text="Логин" Grid.Row="0" Grid.Column="0"></Label>
-                <Entry Grid.Row="0" Grid.Column="1"></Entry>
-                <Label Text="Пароль" Grid.Row="1" Grid.Column="0"></Label>
-                <Entry Grid.Row="1" Grid.Column="1"></Entry>
-                <Button Text="Авторизоваться" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Button>
-            </Grid>
+        <StackLayout Orientation="Vertical" Padding="10, 5">
+            <Frame Style="{StaticResource alert-danger}" IsVisible="{Binding IsError}">
+                <Label TextColor="#721c24" Text="{Binding ErrorMsg}"></Label>
+            </Frame>
+            <StackLayout VerticalOptions="Center">
+                <StackLayout Margin="0, 0, 0, 20">
+                    <Label Style="{StaticResource form-label}" Text="Логин"></Label>
+                    <Entry Style="{StaticResource form-control}" Text="{Binding Login}"></Entry>
+                </StackLayout>
+                <StackLayout Margin="0, 0, 0, 20">
+                    <Label Style="{StaticResource form-label}" Text="Пароль"></Label>
+                    <Entry Style="{StaticResource form-control}" IsPassword="True" Text="{Binding Password}"></Entry>
+                </StackLayout>
+                <StackLayout Margin="0, 0, 0, 20">
+                    <Button Style="{StaticResource btn-primary}" Command="{Binding Authorize}" Text="Авторизоваться"></Button>
+                </StackLayout>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Command="{Binding OpenSettings}" Text="&#9881;"></ToolbarItem>
+    </ContentPage.ToolbarItems>
 </ContentPage>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeScaner.View.SettingsPage">
+    <ContentPage.Resources>
+        <Style x:Key="btn-primary" TargetType="Button">
+            <Setter Property="TextColor" Value="#fff"></Setter>
+            <Setter Property="BackgroundColor" Value="#007bff"></Setter>
+            <Setter Property="BorderColor" Value="#007bff"></Setter>
+            <Setter Property="BorderWidth" Value="2"></Setter>
+            <Setter Property="Padding" Value="10, 5"></Setter>
+        </Style>
+        <Style x:Key="form-label" TargetType="Label">
+            <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="FontAttributes" Value="Bold"></Setter>
+        </Style>
+        <Style x:Key="form-control" TargetType="Entry">
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="TextColor" Value="#495057"></Setter>
+            <Setter Property="BackgroundColor" Value="#fff"></Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="10, 5">
+            <StackLayout  Margin="0, 0, 0, 20">
+                <Label Style="{StaticResource form-label}" Text="IP и Port сервера"></Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Entry Grid.Column="0" Style="{StaticResource form-control}" Text="{Binding IP}"></Entry>
+                    <Label Grid.Column="1" Style="{StaticResource form-label}" Text=":"></Label>
+                    <Entry Grid.Column="2" Style="{StaticResource form-control}" Text="{Binding Port}"></Entry>
+                </Grid>
+            </StackLayout>
+            <StackLayout  Margin="0, 0, 0, 20">
+                <Button Style="{StaticResource btn-primary}" Command="{Binding SaveSettings}" Text="Сохранить текущие настройки"></Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

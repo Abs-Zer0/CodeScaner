@@ -5,13 +5,13 @@ using Xamarin.Forms.Xaml;
 namespace CodeScaner.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AuthorizationPage : ContentPage
+    public partial class SettingsPage : ContentPage
     {
-        public AuthorizationPage()
+        public SettingsPage()
         {
-            this.Title = "Авторизация";
+            this.Title = "Настройки";
             InitializeComponent();
-            this.BindingContext = new AuthorizationVM(this.Navigation);
+            this.BindingContext = new SettingsVM();
         }
     }
 }
