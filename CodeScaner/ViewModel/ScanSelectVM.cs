@@ -22,8 +22,14 @@ namespace CodeScaner.ViewModel
         private async void ScanAsync()
         {
             var scanner = new MobileBarcodeScanner();
-            var result = await scanner.Scan();
+            scanner.CancelButtonText = "Назад";
+            scanner.TopText = "Поднесите к камере код так, чтобы он был единственным в кадре";
 
+            var opts = new MobileBarcodeScanningOptions();
+            opts.AutoRotate = true;
+            opts.DelayBetweenAnalyzingFrames = 1000;
+
+            var result = await scanner.Scan();
             if (result != null)
             {
                 if (!string.IsNullOrWhiteSpace(result.Text))

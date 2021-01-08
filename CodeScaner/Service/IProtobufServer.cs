@@ -5,8 +5,12 @@ using System.Text;
 
 namespace CodeScaner.Service
 {
-    interface IProtobufServer
+    public interface IProtobufServer
     {
-        ServerResponse ServerConnect(ServerRequest request);
+        ServerResponse SignIn(ServerRequest request);
+
+        ServerResponse ChangeStatus(ServerRequest request);
+
+        ServerResponse TryConnect();
     }
 }

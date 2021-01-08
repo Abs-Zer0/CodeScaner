@@ -1,4 +1,5 @@
 ﻿using Plugin.Settings;
+using System;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
@@ -16,16 +17,19 @@ namespace CodeScaner.ViewModel
             {
                 if (value != this._ip)
                 {
-                    if (ipMatch.IsMatch(value))
+                    this._ip = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IP)));
+
+                    /*if (ipMatch.IsMatch(value))
                     {
                         this._ip = value;
                         PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IP)));
-                    }
+                    }*/
                 }
             }
         }
 
-        private string _port = "0";
+        private string _port = 0.ToString();
         public string Port
         {
             get => this._port;
@@ -33,11 +37,19 @@ namespace CodeScaner.ViewModel
             {
                 if (value != this._port)
                 {
-                    if (portMatch.IsMatch(value))
+                    try
                     {
-                        this._port = value;
-                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Port)));
+                        int val = int.Parse(value);
+                        val = val < 0 ? 0 : val;
+                        val = val > ushort.MaxValue ? ushort.MaxValue : val;
+
+                        this._port = val.ToString();
                     }
+                    catch (Exception) {
+                        this._port = 0.ToString();
+                    }
+
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Port)));
                 }
             }
         }
@@ -47,12 +59,10 @@ namespace CodeScaner.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly Regex ipMatch;
-        private readonly Regex portMatch;
 
         public SettingsVM()
         {
             this.ipMatch = new Regex(@"^(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])(\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$");
-            this.portMatch = new Regex(@"^(([0-9]{1,4})|([1-5][0-9]{4})|(6[0-4][0-9]{3})|(65[0-4][0-9]{2})|(655[0-2][0-9])|(6553[0-5]))$");
             this.SaveSettings = new Command(Save);
             Load();
         }

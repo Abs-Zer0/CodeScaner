@@ -1,4 +1,5 @@
-﻿using CodeScaner.View;
+﻿using CodeScaner.Service;
+using CodeScaner.View;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -11,6 +12,8 @@ namespace CodeScaner
         public App()
         {
             InitializeComponent();
+
+            RegisterServices();
 
             MainPage = new NavigationPage(new AuthorizationPage());
         }
@@ -28,6 +31,11 @@ namespace CodeScaner
 
         protected override void OnResume()
         {
+        }
+
+        private void RegisterServices()
+        {
+            ServiceLocator<IProtobufServer>.RegisterService(new ProtobufServer());
         }
     }
 }
