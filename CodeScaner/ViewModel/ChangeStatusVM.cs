@@ -1,4 +1,7 @@
-﻿using CodeScaner.View;
+﻿using CodeScaner.Model.Requests;
+using CodeScaner.View;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -77,8 +80,13 @@ namespace CodeScaner.ViewModel
             }
         }
 
+        public ObservableCollection<string> Statuses { get; } = new ObservableCollection<string>(new[]
+        {
+            "В обработке", "Отправлено", "В пути", "Получено", "Потеряно", "Другое:"
+        });
+
         private string _status = "";
-        public string Status
+        public string SelectedStatus
         {
             get => this._status;
             set
@@ -86,10 +94,13 @@ namespace CodeScaner.ViewModel
                 if (value != this._status)
                 {
                     this._status = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
+                    this.IsOther = this._status == "Другое:";
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedStatus)));
                 }
             }
         }
+
+        public bool IsOther { get; private set; } = false;
 
         private string _otherText = "";
         public string OtherText
@@ -112,6 +123,13 @@ namespace CodeScaner.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         private INavigation navigation;
+
+        private Dictionary<string, Status> statusValues = new Dictionary<string, Status>()
+        {
+            { "В обработке", Status.PROCESSING }, { "Отправлено", Status.SEND },
+            { "В пути", Status.TRAVEL }, { "Получено", Status.RECEIVE },
+            { "Потеряно", Status.LOST }, { "Другое:", Status.OTHER }
+        };
 
         public ChangeStatusVM(INavigation navigationContext, string barcode = "")
         {

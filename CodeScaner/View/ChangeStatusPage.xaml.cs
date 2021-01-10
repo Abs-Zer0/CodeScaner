@@ -14,19 +14,5 @@ namespace CodeScaner.View
             InitializeComponent();
             this.BindingContext = new ChangeStatusVM(this.Navigation, barcode);
         }
-
-        private void StatusChanged(object sender, CheckedChangedEventArgs e)
-        {
-            try
-            {
-                string status = (string)((RadioButton)sender).Value;
-                ((ChangeStatusVM)this.BindingContext).Status = status;
-                otherTxt.IsVisible = (status == "other");
-            }
-            catch (Exception)
-            {
-
-            }
-        }
     }
 }

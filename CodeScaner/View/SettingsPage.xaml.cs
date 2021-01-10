@@ -1,4 +1,5 @@
 ﻿using CodeScaner.ViewModel;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

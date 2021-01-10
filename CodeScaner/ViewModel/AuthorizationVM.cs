@@ -41,7 +41,7 @@ namespace CodeScaner.ViewModel
             get => this._login;
             set
             {
-                if (value != this._login)
+                if (value != this._login && value.Length <= 36)
                 {
                     this._login = value;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Login)));

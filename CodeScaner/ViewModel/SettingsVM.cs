@@ -1,30 +1,59 @@
-﻿using Plugin.Settings;
+﻿using CodeScaner.Model;
+using CodeScaner.Model.Settings;
+using Plugin.Settings;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ZXing;
 
 namespace CodeScaner.ViewModel
 {
     public class SettingsVM : INotifyPropertyChanged
     {
-        private string _ip = "0.0.0.0";
-        public string IP
+        private bool _isSuccess = false;
+        public bool IsSuccess
         {
-            get => this._ip;
+            get => this._isSuccess;
             set
             {
-                if (value != this._ip)
+                if (value != this._isSuccess)
                 {
-                    this._ip = value;
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IP)));
+                    this._isSuccess = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IsSuccess)));
+                }
+            }
+        }
 
-                    /*if (ipMatch.IsMatch(value))
-                    {
-                        this._ip = value;
-                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IP)));
-                    }*/
+        private string _successMsg = "Ошибка";
+        public string SuccessMsg
+        {
+            get => this._successMsg;
+            set
+            {
+                if (value != this._successMsg)
+                {
+                    this._successMsg = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SuccessMsg)));
+                }
+            }
+        }
+
+        private string _url = "0.0.0.0";
+        public string Url
+        {
+            get => this._url;
+            set
+            {
+                if (value != this._url)
+                {
+                    this._url = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Url)));
                 }
             }
         }
@@ -45,7 +74,8 @@ namespace CodeScaner.ViewModel
 
                         this._port = val.ToString();
                     }
-                    catch (Exception) {
+                    catch (Exception)
+                    {
                         this._port = 0.ToString();
                     }
 
@@ -54,30 +84,43 @@ namespace CodeScaner.ViewModel
             }
         }
 
+        public ObservableCollection<BarcodeType> Formats { get; set; } = new ObservableCollection<BarcodeType>(BarcodeType.AllCodes);
+
         public ICommand SaveSettings { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly Regex ipMatch;
-
         public SettingsVM()
         {
-            this.ipMatch = new Regex(@"^(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])(\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[0-9]{2}|[0-9])){3}$");
             this.SaveSettings = new Command(Save);
             Load();
         }
 
         private void Load()
         {
-            string ipPort = CrossSettings.Current.GetValueOrDefault("ip:port", "0.0.0.0:0");
-            string[] splitted = ipPort.Split(':');
-            this._ip = splitted[0];
-            this._port = splitted[1];
+            string urlPortDefault = JsonSerializer.Serialize(new ServerUrl());
+            string urlPortJson = CrossSettings.Current.GetValueOrDefault("url:port", urlPortDefault);
+            var urlPort = JsonSerializer.Deserialize<ServerUrl>(urlPortJson);
+            this._url = urlPort.Url;
+            this._port = urlPort.Port;
+
+            string formatsDefault = JsonSerializer.Serialize(this.Formats);
+            string formatsJson = CrossSettings.Current.GetValueOrDefault("formats", formatsDefault);
+            var formats = JsonSerializer.Deserialize<ObservableCollection<BarcodeType>>(formatsJson);
+            this.Formats = formats;
         }
 
         private void Save()
         {
-            CrossSettings.Current.AddOrUpdateValue("ip:port", this._ip + ":" + this._port);
+            CrossSettings.Current.AddOrUpdateValue("url:port",
+                JsonSerializer.Serialize(new ServerUrl(this._url, this._port)));
+
+            CrossSettings.Current.AddOrUpdateValue("formats",
+                JsonSerializer.Serialize(this.Formats));
+
+            this.IsSuccess = true;
+            this.SuccessMsg = "Сохранено";
+            Timer t = new Timer((obj) => { this.IsSuccess = false; }, null, 5000, Timeout.Infinite);
         }
     }
 }

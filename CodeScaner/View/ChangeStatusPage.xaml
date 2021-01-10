@@ -35,49 +35,34 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Padding="10, 5">
-            <Frame Style="{StaticResource alert-danger}" IsVisible="{Binding IsError}">
-                <Label TextColor="#721c24" Text="{Binding ErrorMsg}"></Label>
-            </Frame>
-            <Frame Style="{StaticResource alert-success}" IsVisible="{Binding IsSuccess}">
-                <Label TextColor="#155724" Text="{Binding SuccessMsg}"></Label>
-            </Frame>
-            <StackLayout Margin="0, 0, 0, 20">
-                <Label Style="{StaticResource form-label}" Text="Значение кода"></Label>
-                <Entry Style="{StaticResource form-control}" Text="{Binding Barcode}"></Entry>
-            </StackLayout>
-            <StackLayout Margin="0, 0, 0, 20">
-                <Label Style="{StaticResource form-label}" Text="Статус"></Label>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="10*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <RadioButton Grid.Row="0" Grid.Column="0" GroupName="status" Value="processing" IsChecked="True" CheckedChanged="StatusChanged"></RadioButton>
-                    <RadioButton Grid.Row="1" Grid.Column="0" GroupName="status" Value="send" CheckedChanged="StatusChanged"></RadioButton>
-                    <RadioButton Grid.Row="2" Grid.Column="0" GroupName="status" Value="go" CheckedChanged="StatusChanged"></RadioButton>
-                    <RadioButton Grid.Row="3" Grid.Column="0" GroupName="status" Value="receive" CheckedChanged="StatusChanged"></RadioButton>
-                    <RadioButton Grid.Row="4" Grid.Column="0" GroupName="status" Value="lost" CheckedChanged="StatusChanged"></RadioButton>
-                    <RadioButton Grid.Row="5" Grid.Column="0" GroupName="status" Value="other" CheckedChanged="StatusChanged"></RadioButton>
-                    <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource form-label}" Text="В обработке"></Label>
-                    <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource form-label}" Text="Отправлено"></Label>
-                    <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource form-label}" Text="В пути"></Label>
-                    <Label Grid.Row="3" Grid.Column="1" Style="{StaticResource form-label}" Text="Получено"></Label>
-                    <Label Grid.Row="4" Grid.Column="1" Style="{StaticResource form-label}" Text="Потеряно"></Label>
-                    <Label Grid.Row="5" Grid.Column="1" Style="{StaticResource form-label}" Text="Другое:"></Label>
-                </Grid>
-                <Entry x:Name="otherTxt" Style="{StaticResource form-control}" Text="{Binding OtherText}" IsVisible="False"></Entry>
-            </StackLayout>
-            <StackLayout Margin="0, 0, 0, 20">
-                <Button Style="{StaticResource btn-primary}" Command="{Binding Send}" Text="Сохранить изменения"></Button>
-            </StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ScrollView Grid.Row="0">
+                    <StackLayout>
+                        <StackLayout Margin="0, 0, 0, 20">
+                            <Label Style="{StaticResource form-label}" Text="Значение кода"></Label>
+                            <Entry Style="{StaticResource form-control}" Text="{Binding Barcode}"></Entry>
+                        </StackLayout>
+                        <StackLayout Margin="0, 0, 0, 20">
+                            <Label Style="{StaticResource form-label}" Text="Статус"></Label>
+                            <Picker ItemsSource="{Binding Statuses}" SelectedItem="{Binding SelectedStatus}" Title="Статус"></Picker>
+                            <Entry Style="{StaticResource form-control}" Text="{Binding OtherText}" IsVisible="{Binding IsOther}"></Entry>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+                <StackLayout Grid.Row="1">
+                    <Frame Style="{StaticResource alert-danger}" IsVisible="{Binding IsError}">
+                        <Label TextColor="#721c24" Text="{Binding ErrorMsg}"></Label>
+                    </Frame>
+                    <Frame Style="{StaticResource alert-success}" IsVisible="{Binding IsSuccess}">
+                        <Label TextColor="#155724" Text="{Binding SuccessMsg}"></Label>
+                    </Frame>
+                    <Button Style="{StaticResource btn-primary}" Command="{Binding Send}" Text="Сохранить изменения"></Button>
+                </StackLayout>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
     <ContentPage.ToolbarItems>
