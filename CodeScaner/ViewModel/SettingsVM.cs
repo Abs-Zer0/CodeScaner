@@ -1,5 +1,6 @@
 ﻿using CodeScaner.Model;
 using CodeScaner.Model.Settings;
+using CodeScaner.Service;
 using Plugin.Settings;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace CodeScaner.ViewModel
             }
         }
 
-        private string _successMsg = "Ошибка";
+        private string _successMsg = "Сохранено";
         public string SuccessMsg
         {
             get => this._successMsg;
@@ -98,29 +99,22 @@ namespace CodeScaner.ViewModel
 
         private void Load()
         {
-            string urlPortDefault = JsonSerializer.Serialize(new ServerUrl());
-            string urlPortJson = CrossSettings.Current.GetValueOrDefault("url:port", urlPortDefault);
-            var urlPort = JsonSerializer.Deserialize<ServerUrl>(urlPortJson);
+            var urlPort = Services.Settings.GetUrlPort(new ServerUrl());
             this._url = urlPort.Url;
             this._port = urlPort.Port;
 
-            string formatsDefault = JsonSerializer.Serialize(this.Formats);
-            string formatsJson = CrossSettings.Current.GetValueOrDefault("formats", formatsDefault);
-            var formats = JsonSerializer.Deserialize<ObservableCollection<BarcodeType>>(formatsJson);
-            this.Formats = formats;
+            this.Formats = new ObservableCollection<BarcodeType>(Services.Settings.GetFormats(this.Formats));
         }
 
         private void Save()
         {
-            CrossSettings.Current.AddOrUpdateValue("url:port",
-                JsonSerializer.Serialize(new ServerUrl(this._url, this._port)));
+            Services.Settings.AddOrUpdateUrlPort(new ServerUrl(this._url, this._port));
 
-            CrossSettings.Current.AddOrUpdateValue("formats",
-                JsonSerializer.Serialize(this.Formats));
+            Services.Settings.AddOrUpdateFormats(this.Formats);
 
             this.IsSuccess = true;
             this.SuccessMsg = "Сохранено";
-            Timer t = new Timer((obj) => { this.IsSuccess = false; }, null, 5000, Timeout.Infinite);
+            Timer t = new Timer((obj) => { this.IsSuccess = false; }, null, Constants.DEFAULT_TIMEOUT, Timeout.Infinite);
         }
     }
 }

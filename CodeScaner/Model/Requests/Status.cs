@@ -6,6 +6,6 @@ namespace CodeScaner.Model.Requests
 {
     public enum Status
     {
-        PROCESSING, SEND, TRAVEL, RECEIVE, LOST, OTHER
+        PROCESSING, SEND, TRAVEL, RECEIVE, LOST, OTHER, UNKNOWN
     }
 }

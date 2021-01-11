@@ -1,4 +1,6 @@
 ﻿using CodeScaner.Service;
+using CodeScaner.Service.Client;
+using CodeScaner.Service.Server;
 using CodeScaner.View;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -36,6 +38,7 @@ namespace CodeScaner
         private void RegisterServices()
         {
             ServiceLocator<IProtobufServer>.RegisterService(new ProtobufServer());
+            ServiceLocator<ISettings>.RegisterService(new Settings());
         }
     }
 }

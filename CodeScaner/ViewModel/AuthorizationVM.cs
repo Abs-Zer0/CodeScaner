@@ -1,5 +1,11 @@
-﻿using CodeScaner.View;
+﻿using CodeScaner.Model;
+using CodeScaner.Model.Settings;
+using CodeScaner.Service;
+using CodeScaner.View;
+using System;
 using System.ComponentModel;
+using System.Net.Sockets;
+using System.Threading;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -41,9 +47,9 @@ namespace CodeScaner.ViewModel
             get => this._login;
             set
             {
-                if (value != this._login && value.Length <= 36)
+                if (value != this._login)
                 {
-                    this._login = value;
+                    this._login = value.Length > 36 ? value.Substring(0, 36) : value;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Login)));
                 }
             }
@@ -80,7 +86,21 @@ namespace CodeScaner.ViewModel
 
         private async void Auth()
         {
-            await this.navigation.PushAsync(new ScanSelectPage());
+            try
+            {
+                await Services.Server.SignInAsync(this._login, this._password);
+
+                Services.Settings.AddOrUpdatePerson(new Person(this._login, this._password));
+
+                await this.navigation.PushAsync(new ScanSelectPage());
+            }
+            catch (Exception ex)
+            {
+                this.IsError = true;
+                this.ErrorMsg = ex.Message;
+
+                Timer t = new Timer((obj) => { this.IsError = false; }, null, Constants.DEFAULT_TIMEOUT, Timeout.Infinite);
+            }
         }
 
         private async void Settings()
