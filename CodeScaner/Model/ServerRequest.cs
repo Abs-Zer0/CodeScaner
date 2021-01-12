@@ -26,7 +26,7 @@ namespace CodeScaner.Model
             this.Password = Encoding.ASCII.GetString(Encoding.Default.GetBytes(password));
             this.Barcode = Encoding.ASCII.GetString(Encoding.Default.GetBytes(barcode));
             this.NewStatus = newStatus;
-            this.Description = description;
+            this.Description = Encoding.ASCII.GetString(Encoding.Default.GetBytes(description));
         }
 
         public ServerRequest(string login, string password) : this(login, password, "", Status.UNKNOWN, "") { }

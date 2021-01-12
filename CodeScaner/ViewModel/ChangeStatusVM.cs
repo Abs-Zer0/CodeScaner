@@ -56,7 +56,7 @@ namespace CodeScaner.ViewModel
             }
         }
 
-        private string _successMsg = "Ошибка";
+        private string _successMsg = "Успешно";
         public string SuccessMsg
         {
             get => this._successMsg;
@@ -126,7 +126,8 @@ namespace CodeScaner.ViewModel
             {
                 if (value != this._otherText)
                 {
-                    this._otherText = value;
+                    this._otherText = value.Length > Constants.DESCRIPTION_LENGTH ?
+                        value.Substring(0, Constants.DESCRIPTION_LENGTH) : value;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(OtherText)));
                 }
             }

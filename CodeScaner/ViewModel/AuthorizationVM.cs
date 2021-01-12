@@ -49,7 +49,8 @@ namespace CodeScaner.ViewModel
             {
                 if (value != this._login)
                 {
-                    this._login = value.Length > 36 ? value.Substring(0, 36) : value;
+                    this._login = value.Length > Constants.SIGN_IN_LENGTH ?
+                        value.Substring(0, Constants.SIGN_IN_LENGTH) : value;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Login)));
                 }
             }
@@ -63,7 +64,8 @@ namespace CodeScaner.ViewModel
             {
                 if (value != this._password)
                 {
-                    this._password = value;
+                    this._password = value.Length > Constants.SIGN_IN_LENGTH ?
+                        value.Substring(0, Constants.SIGN_IN_LENGTH) : value;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(Password)));
                 }
             }
