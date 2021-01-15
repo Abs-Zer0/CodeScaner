@@ -46,7 +46,7 @@
                                     <ColumnDefinition Width="1*"></ColumnDefinition>
                                     <ColumnDefinition Width="3*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Entry Grid.Column="0" Style="{StaticResource form-control}" Keyboard="Url" Text="{Binding IP}"></Entry>
+                                <Entry Grid.Column="0" Style="{StaticResource form-control}" Text="{Binding Url}"></Entry>
                                 <Label Grid.Column="1" Style="{StaticResource form-label}" Text=":"></Label>
                                 <Entry Grid.Column="2" Style="{StaticResource form-control}" Keyboard="Numeric" Text="{Binding Port}"></Entry>
                             </Grid>

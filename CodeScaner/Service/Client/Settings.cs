@@ -24,6 +24,11 @@ namespace CodeScaner.Service.Client
             CrossSettings.Current.AddOrUpdateValue("url:port", JsonSerializer.Serialize(urlPort));
         }
 
+        public void AddOrUpdateUrlPort(string url, string port)
+        {
+            CrossSettings.Current.AddOrUpdateValue("url:port", url + ":" + port);
+        }
+
         public IEnumerable<BarcodeType> GetFormats(IEnumerable<BarcodeType> defaultVal)
         {
             string formatsDefault = JsonSerializer.Serialize(defaultVal);
@@ -46,6 +51,11 @@ namespace CodeScaner.Service.Client
             string urlPortJson = CrossSettings.Current.GetValueOrDefault("url:port", urlPortDefault);
 
             return JsonSerializer.Deserialize<ServerUrl>(urlPortJson);
+        }
+
+        public string[] GetUrlPort(string urlDefault, string portDefault)
+        {
+            return CrossSettings.Current.GetValueOrDefault("url:port", urlDefault + ":" + portDefault).Split(':');
         }
     }
 }

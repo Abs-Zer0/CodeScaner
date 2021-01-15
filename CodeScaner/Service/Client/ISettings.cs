@@ -8,8 +8,10 @@ namespace CodeScaner.Service.Client
     public interface ISettings
     {
         void AddOrUpdateUrlPort(ServerUrl urlPort);
+        void AddOrUpdateUrlPort(string url, string port);
 
         ServerUrl GetUrlPort(ServerUrl defaultVal);
+        string[] GetUrlPort(string urlDefault, string portDefault);
 
         void AddOrUpdateFormats(IEnumerable<BarcodeType> formats);
 

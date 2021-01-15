@@ -99,16 +99,20 @@ namespace CodeScaner.ViewModel
 
         private void Load()
         {
-            var urlPort = Services.Settings.GetUrlPort(new ServerUrl());
-            this._url = urlPort.Url;
-            this._port = urlPort.Port;
+            //var urlPort = Services.Settings.GetUrlPort(new ServerUrl());
+            var urlPort = Services.Settings.GetUrlPort("0.0.0.0", "0");
+            //this._url = urlPort.Url;
+            this._url = urlPort[0];
+            //this._port = urlPort.Port;
+            this._port = urlPort[1];
 
             this.Formats = new ObservableCollection<BarcodeType>(Services.Settings.GetFormats(this.Formats));
         }
 
         private void Save()
         {
-            Services.Settings.AddOrUpdateUrlPort(new ServerUrl(this._url, this._port));
+            //Services.Settings.AddOrUpdateUrlPort(new ServerUrl(this._url, this._port));
+            Services.Settings.AddOrUpdateUrlPort(this._url, this._port);
 
             Services.Settings.AddOrUpdateFormats(this.Formats);
 
