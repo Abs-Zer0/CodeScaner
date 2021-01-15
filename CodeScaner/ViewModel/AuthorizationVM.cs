@@ -92,7 +92,8 @@ namespace CodeScaner.ViewModel
             {
                 await Services.Server.SignInAsync(this._login, this._password);
 
-                Services.Settings.AddOrUpdatePerson(new Person(this._login, this._password));
+                //Services.Settings.AddOrUpdatePerson(new Person(this._login, this._password));
+                Services.Settings.AddOrUpdatePerson(this._login, this._password);
 
                 await this.navigation.PushAsync(new ScanSelectPage());
             }

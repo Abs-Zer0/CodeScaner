@@ -18,7 +18,9 @@ namespace CodeScaner.Service.Client
         IEnumerable<BarcodeType> GetFormats(IEnumerable<BarcodeType> defaultVal);
 
         void AddOrUpdatePerson(Person person);
+        void AddOrUpdatePerson(string login, string password);
 
         Person GetPerson(Person defaultVal);
+        string[] GetPerson(string loginDefault, string passwordDefault);
     }
 }

@@ -19,6 +19,12 @@ namespace CodeScaner.Service.Client
             CrossSettings.Current.AddOrUpdateValue("person", JsonSerializer.Serialize(person));
         }
 
+        public void AddOrUpdatePerson(string login, string password)
+        {
+            CrossSettings.Current.AddOrUpdateValue("login", login);
+            CrossSettings.Current.AddOrUpdateValue("password", password);
+        }
+
         public void AddOrUpdateUrlPort(ServerUrl urlPort)
         {
             CrossSettings.Current.AddOrUpdateValue("url:port", JsonSerializer.Serialize(urlPort));
@@ -43,6 +49,14 @@ namespace CodeScaner.Service.Client
             string personJson = CrossSettings.Current.GetValueOrDefault("person", personDefault);
 
             return JsonSerializer.Deserialize<Person>(personJson);
+        }
+
+        public string[] GetPerson(string loginDefault, string passwordDefault)
+        {
+            string login = CrossSettings.Current.GetValueOrDefault("login", loginDefault);
+            string password = CrossSettings.Current.GetValueOrDefault("password", passwordDefault);
+
+            return new[] { login, password };
         }
 
         public ServerUrl GetUrlPort(ServerUrl defaultVal)

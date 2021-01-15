@@ -27,8 +27,9 @@ namespace CodeScaner.Service.Server
                 await client.ConnectAsync(urlPort[0], int.Parse(urlPort[1]));
 
                 client.GetStream().WriteTimeout = Constants.DEFAULT_TIMEOUT;
-                Person person = Services.Settings.GetPerson(new Person());
-                ServerRequest request = new ServerRequest(person.Login, person.Password, barcode, newStatus, description);
+                //Person person = Services.Settings.GetPerson(new Person());
+                string[] person = Services.Settings.GetPerson("", "");
+                ServerRequest request = new ServerRequest(person[0], person[0], barcode, newStatus, description);
                 Serializer.Serialize(client.GetStream(), request);
 
                 /*
