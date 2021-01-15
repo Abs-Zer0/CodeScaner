@@ -31,6 +31,13 @@ namespace sbc.data
         [global::System.ComponentModel.DefaultValue("")]
         public string Description { get; set; } = "";
 
+        [global::ProtoBuf.ProtoMember(6)]
+        public RetCode ReturnCode { get; set; }
+
+        [global::ProtoBuf.ProtoMember(7)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string CallbackMessage { get; set; } = "";
+
         public ServerRequest(string login, string password, string barcode, Status newStatus, string description)
         {
             this.Login = Encoding.ASCII.GetString(Encoding.Default.GetBytes(login));
@@ -41,5 +48,7 @@ namespace sbc.data
         }
 
         public ServerRequest(string login, string password) : this(login, password, "", Status.Unknown, "") { }
+
+        public ServerRequest() : this("", "") { }
     }
 }

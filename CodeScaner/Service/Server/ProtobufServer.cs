@@ -1,5 +1,4 @@
 ﻿using CodeScaner.Model;
-using CodeScaner.Model.Responses;
 using CodeScaner.Model.Settings;
 using ProtoBuf;
 using sbc.data;
@@ -33,19 +32,17 @@ namespace CodeScaner.Service.Server
                 ServerRequest request = new ServerRequest(Constants.Login, Constants.Password, barcode, newStatus, description);
                 Serializer.Serialize(client.GetStream(), request);
 
-                /*
                 client.GetStream().ReadTimeout = Constants.DEFAULT_TIMEOUT;
-                ServerResponse response = Serializer.Deserialize<ServerResponse>(client.GetStream());
+                ServerRequest response = Serializer.Deserialize<ServerRequest>(client.GetStream());
 
-                if (response.Type == ResponseType.SIGN_IN_ERROR)
-                    throw new Exception("Не найден пользователь с такими логином и паролем");
+                if (response.ReturnCode == RetCode.SignInError)
+                    throw new Exception(response.CallbackMessage/*"Не найден пользователь с такими логином и паролем"*/);
 
-                if (response.Type == ResponseType.ALREADY_SETTED)
-                    throw new Exception("Вы не можете изменить статус не этот");
+                if (response.ReturnCode == RetCode.AlreadySetted)
+                    throw new Exception(response.CallbackMessage/*"Вы не можете изменить статус не этот"*/);
 
-                if (response.Type == ResponseType.ERROR)
-                    throw new Exception(response.Description);
-                */
+                if (response.ReturnCode == RetCode.Error)
+                    throw new Exception(response.CallbackMessage);
             }
             catch (SocketException ex)
             {
@@ -76,16 +73,14 @@ namespace CodeScaner.Service.Server
                 ServerRequest request = new ServerRequest(login, password);
                 Serializer.Serialize(client.GetStream(), request);
 
-                /*
                 client.GetStream().ReadTimeout = Constants.DEFAULT_TIMEOUT;
-                ServerResponse response = Serializer.Deserialize<ServerResponse>(client.GetStream());
+                ServerRequest response = Serializer.Deserialize<ServerRequest>(client.GetStream());
 
-                if (response.Type == ResponseType.SIGN_IN_ERROR)
-                    throw new Exception("Не найден пользователь с такими логином и паролем");
+                if (response.ReturnCode == RetCode.SignInError)
+                    throw new Exception(response.CallbackMessage/*"Не найден пользователь с такими логином и паролем"*/);
 
-                if (response.Type == ResponseType.ERROR)
-                    throw new Exception(response.Description);
-                */
+                if (response.ReturnCode == RetCode.Error)
+                    throw new Exception(response.CallbackMessage);
             }
             catch (SocketException ex)
             {
