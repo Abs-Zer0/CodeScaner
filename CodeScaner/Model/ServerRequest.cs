@@ -25,14 +25,14 @@ namespace sbc.data
         public string Barcode { get; set; } = "";
 
         [global::ProtoBuf.ProtoMember(4)]
-        public Status NewStatus { get; set; }
+        public Status NewStatus { get; set; } = Status.Unknown;
 
         [global::ProtoBuf.ProtoMember(5)]
         [global::System.ComponentModel.DefaultValue("")]
         public string Description { get; set; } = "";
 
         [global::ProtoBuf.ProtoMember(6)]
-        public RetCode ReturnCode { get; set; }
+        public RetCode ReturnCode { get; set; } = RetCode.Success;
 
         [global::ProtoBuf.ProtoMember(7)]
         [global::System.ComponentModel.DefaultValue("")]
