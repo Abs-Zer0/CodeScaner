@@ -1,24 +1,35 @@
-﻿using CodeScaner.Model.Requests;
-using ProtoBuf;
+﻿using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CodeScaner.Model
+namespace sbc.data
 {
     [ProtoContract]
-    public class ServerRequest
+    public class ServerRequest : global::ProtoBuf.IExtensible
     {
-        [ProtoMember(1)]
-        public string Login { get; set; }
-        [ProtoMember(2)]
-        public string Password { get; set; }
-        [ProtoMember(3)]
-        public string Barcode { get; set; }
-        [ProtoMember(4)]
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string Login { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(2)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string Password { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string Barcode { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(4)]
         public Status NewStatus { get; set; }
-        [ProtoMember(5)]
-        public string Description { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5)]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string Description { get; set; } = "";
 
         public ServerRequest(string login, string password, string barcode, Status newStatus, string description)
         {
@@ -29,6 +40,6 @@ namespace CodeScaner.Model
             this.Description = Encoding.ASCII.GetString(Encoding.Default.GetBytes(description));
         }
 
-        public ServerRequest(string login, string password) : this(login, password, "", Status.UNKNOWN, "") { }
+        public ServerRequest(string login, string password) : this(login, password, "", Status.Unknown, "") { }
     }
 }

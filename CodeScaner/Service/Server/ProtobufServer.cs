@@ -1,8 +1,8 @@
 ﻿using CodeScaner.Model;
-using CodeScaner.Model.Requests;
 using CodeScaner.Model.Responses;
 using CodeScaner.Model.Settings;
 using ProtoBuf;
+using sbc.data;
 using System;
 using System.Collections.Generic;
 using System.Net;

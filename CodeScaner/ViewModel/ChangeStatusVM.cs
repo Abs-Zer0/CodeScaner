@@ -1,7 +1,7 @@
 ﻿using CodeScaner.Model;
-using CodeScaner.Model.Requests;
 using CodeScaner.Service;
 using CodeScaner.View;
+using sbc.data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -98,7 +98,7 @@ namespace CodeScaner.ViewModel
                 if (value != this._status)
                 {
                     this._status = value;
-                    this.IsOther = statusValues[value] == Status.OTHER;
+                    this.IsOther = statusValues[value] == Status.Other;
                     PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedStatus)));
                 }
             }
@@ -143,9 +143,9 @@ namespace CodeScaner.ViewModel
 
         private Dictionary<string, Status> statusValues = new Dictionary<string, Status>()
         {
-            { "В обработке", Status.PROCESSING }, { "Отправлено", Status.SEND },
-            { "В пути", Status.TRAVEL }, { "Получено", Status.RECEIVE },
-            { "Потеряно", Status.LOST }, { "Другое:", Status.OTHER }
+            { "В обработке", Status.Processing }, { "Отправлено", Status.Send },
+            { "В пути", Status.Travel }, { "Получено", Status.Receive },
+            { "Потеряно", Status.Lost }, { "Другое:", Status.Other }
         };
 
         public ChangeStatusVM(INavigation navigationContext, string barcode = "")
@@ -161,7 +161,7 @@ namespace CodeScaner.ViewModel
         {
             try
             {
-                string description = this.statusValues[this._status] == Status.OTHER ? this._otherText : "";
+                string description = this.statusValues[this._status] == Status.Other ? this._otherText : "";
                 await Services.Server.ChangeStatusAsync(this._barcode, this.statusValues[this._status], description);
 
                 this.IsSuccess = true;

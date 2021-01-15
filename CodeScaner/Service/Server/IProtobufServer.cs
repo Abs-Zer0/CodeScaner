@@ -1,5 +1,5 @@
 ﻿using CodeScaner.Model;
-using CodeScaner.Model.Requests;
+using sbc.data;
 using System;
 using System.Collections.Generic;
 using System.Text;
