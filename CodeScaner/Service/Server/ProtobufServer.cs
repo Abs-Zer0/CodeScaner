@@ -31,6 +31,7 @@ namespace CodeScaner.Service.Server
                 //ServerRequest request = new ServerRequest(person[0], person[1], barcode, newStatus, description);
                 ServerRequest request = new ServerRequest(Constants.Login, Constants.Password, barcode, newStatus, description);
                 Serializer.Serialize(client.GetStream(), request);
+                client.GetStream().Flush();
 
                 client.GetStream().ReadTimeout = Constants.DEFAULT_TIMEOUT;
                 ServerRequest response = Serializer.Deserialize<ServerRequest>(client.GetStream());
@@ -72,6 +73,7 @@ namespace CodeScaner.Service.Server
                 client.GetStream().WriteTimeout = Constants.DEFAULT_TIMEOUT;
                 ServerRequest request = new ServerRequest(login, password);
                 Serializer.Serialize(client.GetStream(), request);
+                client.GetStream().Flush();
 
                 client.GetStream().ReadTimeout = Constants.DEFAULT_TIMEOUT;
                 ServerRequest response = Serializer.Deserialize<ServerRequest>(client.GetStream());
