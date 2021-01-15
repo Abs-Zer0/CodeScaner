@@ -9,5 +9,8 @@ namespace CodeScaner.Model
         public static readonly int DEFAULT_TIMEOUT = 5000;
         public static readonly int SIGN_IN_LENGTH = 36;
         public static readonly int DESCRIPTION_LENGTH = 128;
+
+        public static string Login = "";
+        public static string Password = "";
     }
 }
