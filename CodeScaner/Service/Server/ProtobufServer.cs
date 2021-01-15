@@ -22,8 +22,9 @@ namespace CodeScaner.Service.Server
             {
                 client = new TcpClient();
 
-                ServerUrl urlPort = Services.Settings.GetUrlPort(new ServerUrl());
-                await client.ConnectAsync(urlPort.Url, int.Parse(urlPort.Port));
+                //ServerUrl urlPort = Services.Settings.GetUrlPort(new ServerUrl());
+                var urlPort = Services.Settings.GetUrlPort("0.0.0.0", "0");
+                await client.ConnectAsync(urlPort[0], int.Parse(urlPort[1]));
 
                 client.GetStream().WriteTimeout = Constants.DEFAULT_TIMEOUT;
                 Person person = Services.Settings.GetPerson(new Person());
@@ -63,8 +64,9 @@ namespace CodeScaner.Service.Server
             {
                 client = new TcpClient();
 
-                ServerUrl urlPort = Services.Settings.GetUrlPort(new ServerUrl());
-                await client.ConnectAsync(urlPort.Url, int.Parse(urlPort.Port));
+                //ServerUrl urlPort = Services.Settings.GetUrlPort(new ServerUrl());
+                var urlPort = Services.Settings.GetUrlPort("176.215.0.133", "12340");
+                await client.ConnectAsync(urlPort[0], int.Parse(urlPort[1]));
 
                 client.GetStream().WriteTimeout = Constants.DEFAULT_TIMEOUT;
                 ServerRequest request = new ServerRequest(login, password);
