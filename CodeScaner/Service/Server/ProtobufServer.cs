@@ -33,17 +33,19 @@ namespace CodeScaner.Service.Server
                 Serializer.Serialize(client.GetStream(), request);
                 client.GetStream().Flush();
 
+                /*
                 client.GetStream().ReadTimeout = Constants.DEFAULT_TIMEOUT;
                 ServerRequest response = Serializer.Deserialize<ServerRequest>(client.GetStream());
 
                 if (response.ReturnCode == RetCode.SignInError)
-                    throw new Exception(response.CallbackMessage/*"Не найден пользователь с такими логином и паролем"*/);
+                    throw new Exception(response.CallbackMessage);
 
                 if (response.ReturnCode == RetCode.AlreadySetted)
-                    throw new Exception(response.CallbackMessage/*"Вы не можете изменить статус не этот"*/);
+                    throw new Exception(response.CallbackMessage);
 
                 if (response.ReturnCode == RetCode.Error)
                     throw new Exception(response.CallbackMessage);
+                */
             }
             catch (SocketException ex)
             {
@@ -75,14 +77,16 @@ namespace CodeScaner.Service.Server
                 Serializer.Serialize(client.GetStream(), request);
                 client.GetStream().Flush();
 
+                /*
                 client.GetStream().ReadTimeout = Constants.DEFAULT_TIMEOUT;
                 ServerRequest response = Serializer.Deserialize<ServerRequest>(client.GetStream());
 
                 if (response.ReturnCode == RetCode.SignInError)
-                    throw new Exception(response.CallbackMessage/*"Не найден пользователь с такими логином и паролем"*/);
+                    throw new Exception(response.CallbackMessage);
 
                 if (response.ReturnCode == RetCode.Error)
                     throw new Exception(response.CallbackMessage);
+                */
             }
             catch (SocketException ex)
             {
