@@ -29,7 +29,7 @@ namespace CodeScaner.Service.Server
                 client.GetStream().WriteTimeout = Constants.DEFAULT_TIMEOUT;
                 //Person person = Services.Settings.GetPerson(new Person());
                 string[] person = Services.Settings.GetPerson("", "");
-                ServerRequest request = new ServerRequest(person[0], person[0], barcode, newStatus, description);
+                ServerRequest request = new ServerRequest(person[0], person[1], barcode, newStatus, description);
                 Serializer.Serialize(client.GetStream(), request);
 
                 /*
