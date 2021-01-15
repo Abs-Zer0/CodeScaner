@@ -38,14 +38,19 @@ namespace sbc.data
         [global::System.ComponentModel.DefaultValue("")]
         public string CallbackMessage { get; set; } = "";
 
-        public ServerRequest(string login, string password, string barcode, Status newStatus, string description)
+        private ServerRequest(string log, string passwd, string code, Status stat, string desc, RetCode ret, string callback)
         {
-            this.Login = Encoding.ASCII.GetString(Encoding.Default.GetBytes(login));
-            this.Password = Encoding.ASCII.GetString(Encoding.Default.GetBytes(password));
-            this.Barcode = Encoding.ASCII.GetString(Encoding.Default.GetBytes(barcode));
-            this.NewStatus = newStatus;
-            this.Description = Encoding.ASCII.GetString(Encoding.Default.GetBytes(description));
+            this.Login = Encoding.ASCII.GetString(Encoding.Default.GetBytes(log));
+            this.Password = Encoding.ASCII.GetString(Encoding.Default.GetBytes(passwd));
+            this.Barcode = Encoding.ASCII.GetString(Encoding.Default.GetBytes(code));
+            this.NewStatus = stat;
+            this.Description = Encoding.ASCII.GetString(Encoding.Default.GetBytes(desc));
+            this.ReturnCode = ret;
+            this.CallbackMessage = Encoding.ASCII.GetString(Encoding.Default.GetBytes(callback));
         }
+
+        public ServerRequest(string login, string password, string barcode, Status newStatus, string description)
+            : this(login, password, barcode, newStatus, description, RetCode.Success, "") { }
 
         public ServerRequest(string login, string password) : this(login, password, "", Status.Unknown, "") { }
 
